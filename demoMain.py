@@ -1,5 +1,9 @@
 import json
 import subprocess
+import threading
+import select
+import msvcrt
+import time
 
 
 def read_log_file(log_file):
@@ -11,21 +15,59 @@ def read_log_file(log_file):
             return num_boxes, box_angles
 
     except Exception as e:
-        print(f"读取日志文件出现异常：{e}")
+        print(f"Error reading log file: {e}")
         return None, None
 
 
-if __name__ == "__main__":
-    log_file = "./logs/log.INFO"  # 此处的日志文件名与C++程序中的FLAGS_log_dir相对应
-    # 执行C++程序并重定向输出到日志文件
-    result = subprocess.run(["./bin/Debug/BaslerInfer"],  stderr=subprocess.PIPE, text=True)
+def send_trigger_signal(proc):
+    # Communicate with cpp, trigger to work once
+    if proc.poll() is None:
+        trigger_signal = True
+        proc.stdin.write(str(trigger_signal) + '\n')
+        proc.stdin.flush()
 
-    # 将C++程序的输出写入日志文件
-    with open(log_file, "w") as file:
-        file.write(result.stderr)
+
+def rece_stderr_pipe(proc):
+    std_content = ''
+
+    # Skip error string of stderr
+    line = proc.stderr.readline()
+    while not line=='BeginData\n':
+        line = proc.stderr.readline()
+    
+    # Read data after parse str=BeginData
+    for line in proc.stderr:
+        if not line=='EndData\n':
+            std_content += line
+        else:
+            break
+    return std_content
+
+
+if __name__ == "__main__":
+    # Log file and exec proc saved path
+    log_file = "./logs/log.INFO"
+    exec_file = "./bin/Debug/pyCallCppApp"
+
+    # Execute C++ program and redirect output to a log file
+    proc = subprocess.Popen([exec_file], stdin=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+
+    # Work loop
+    for i in range(5):
+        # Communicate with cpp, trigger to work once
+        send_trigger_signal(proc)
+        
+        # Receive data from stderr pipe
+        str_result = rece_stderr_pipe(proc)
+
+        # Write program return to log file
+        with open(log_file, "w") as file:
+            file.write(str_result)
 
     num_boxes, box_angles = read_log_file(log_file)
 
     if num_boxes is not None and box_angles is not None:
-        print("箱子数量：", num_boxes)
-        print("箱子倾角：", box_angles)
+        print("INFO: Number of boxes: ", num_boxes)
+        print("INFO: Angles of boxes: ", box_angles)
+    
+    proc.terminate()
