@@ -15,7 +15,7 @@ int main()
     Py_Initialize();
     if (!Py_IsInitialized()) {
         std::cout << "ERROR: Python initialization failed" << std::endl;
-        return 0;
+        return -1;
     }
 
     // Step 2: Set Python module search path
@@ -34,7 +34,7 @@ int main()
     if (pModule == nullptr) {
         PyErr_Print();
         std::cout << "ERROR: Failed to load 'cppCall'" << std::endl;
-        return 0;
+        return -1;
     }
     
     // Step 3.1: Get Python function object
@@ -59,7 +59,7 @@ int main()
         Py_DECREF(pArgs);
 
         if (pValue != nullptr) {
-            // Step 2.6: Handle Python function return value
+            // Step 3.6: Handle Python function return value
             const char* response = PyUnicode_AsUTF8(pValue);
             std::cout << "Response from Python: " << response << std::endl;
             Py_DECREF(pValue);

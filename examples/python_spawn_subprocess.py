@@ -47,7 +47,7 @@ def rece_stderr_pipe(proc):
 if __name__ == "__main__":
     # Log file and exec proc saved path
     log_file = "./logs/log.INFO"
-    exec_file = "./bin/Debug/pyCallCppApp"
+    exec_file = "./bin/Debug/py_subprocess"
 
     # Execute C++ program and redirect output to a log file
     proc = subprocess.Popen([exec_file], stdin=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
