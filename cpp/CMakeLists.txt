@@ -6,6 +6,8 @@ if(NOT THIRD_PARTY)
     endif()
 endif()
 
+add_subdirectory(src)
+
 # add exec program
 add_executable(py_subprocess py_subprocess.cpp)
 
