@@ -1,4 +1,3 @@
-
 # Find Python
 find_package(Python COMPONENTS Interpreter Development REQUIRED)
 # message("Python_INCLUDE_DIRS: ${Python_INCLUDE_DIRS}")
@@ -13,27 +12,36 @@ find_package(pybind11 REQUIRED)
 include_directories(include)
 
 # Create pybind11 module
-pybind11_add_module(BinderLib MODULE binder.cpp binder_lib.cpp)
+pybind11_add_module(WrapperLib MODULE binder.cpp wrapper_lib.cpp)
 
 # Link Python library and pybind11 module
 if(WIN32)
     # Set Python library based on project configuration
     if(CMAKE_BUILD_TYPE MATCHES Debug)
-        target_link_libraries(BinderLib PRIVATE ${Python_LIBRARY_DIRS}/python37_d.lib)
+        target_link_libraries(WrapperLib PRIVATE ${Python_LIBRARY_DIRS}/python37_d.lib)
     else()
-        target_link_libraries(BinderLib PRIVATE ${Python_LIBRARY_DIRS}/python37.lib)
+        target_link_libraries(WrapperLib PRIVATE ${Python_LIBRARY_DIRS}/python37.lib)
     endif()
 endif()
 
-target_link_libraries(BinderLib PRIVATE pybind11::module Python::Module)
+target_link_libraries(WrapperLib PRIVATE pybind11::module Python::Module)
 
 # Get Python::Module linked libraries
 get_target_property(PYTHON_MODULE_LIBRARIES Python::Module INTERFACE_LINK_LIBRARIES)
 message("Python::Module linked libraries: ${PYTHON_MODULE_LIBRARIES}")
 
-set_target_properties(BinderLib PROPERTIES
+set_target_properties(WrapperLib PROPERTIES
                       CXX_STANDARD 11
                       CXX_STANDARD_REQUIRED ON
                       CXX_EXTENSIONS OFF)
 
-
+# copy build python package to example directory
+add_custom_command(TARGET WrapperLib POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        $<TARGET_FILE:WrapperLib>
+        ${CMAKE_SOURCE_DIR}/examples/utils
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        $<TARGET_FILE_DIR:WrapperLib>/WrapperLib.lib
+        ${CMAKE_SOURCE_DIR}/examples/utils
+    COMMENT "Copying executable if different after build"
+)

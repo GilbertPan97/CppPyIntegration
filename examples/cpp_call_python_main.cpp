@@ -28,12 +28,11 @@ int main()
     std::cout << "INFO: Python interpreter search path is: " << buffer << std::endl;
 
     // Step 3: Call Python script and pass data
-    // Py_SetPath(Py_DecodeLocale(ROOT_PATH.c_str(), nullptr));
-    PyObject* pModule  = PyImport_ImportModule("cppCall");
+    PyObject* pModule  = PyImport_ImportModule("py_module");
 
     if (pModule == nullptr) {
         PyErr_Print();
-        std::cout << "ERROR: Failed to load 'cppCall'" << std::endl;
+        std::cout << "ERROR: Failed to load 'py_module'" << std::endl;
         return -1;
     }
     
