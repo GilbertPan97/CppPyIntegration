@@ -1,7 +1,7 @@
-prefix=C:/SFR_SDK/glog-0.6.0
-exec_prefix=C:/SFR_SDK/glog-0.6.0/bin
-libdir=C:/SFR_SDK/glog-0.6.0/lib
-includedir=C:/SFR_SDK/glog-0.6.0/include
+prefix=D:/pkg_ws/glog-0.6.0/install
+exec_prefix=D:/pkg_ws/glog-0.6.0/install/bin
+libdir=D:/pkg_ws/glog-0.6.0/install/lib
+includedir=D:/pkg_ws/glog-0.6.0/install/include
 
 Name: libglog
 Description: Google Log (glog) C++ logging framework

@@ -14,15 +14,15 @@ include_directories(include)
 # Create pybind11 module
 pybind11_add_module(WrapperLib MODULE binder.cpp wrapper_lib.cpp)
 
-# Link Python library and pybind11 module
-if(WIN32)
-    # Set Python library based on project configuration
-    if(CMAKE_BUILD_TYPE MATCHES Debug)
-        target_link_libraries(WrapperLib PRIVATE ${Python_LIBRARY_DIRS}/python37_d.lib)
-    else()
-        target_link_libraries(WrapperLib PRIVATE ${Python_LIBRARY_DIRS}/python37.lib)
-    endif()
-endif()
+# # Link Python library and pybind11 module
+# if(WIN32)
+#     # Set Python library based on project configuration
+#     if(CMAKE_BUILD_TYPE MATCHES Debug)
+#         target_link_libraries(WrapperLib PRIVATE ${Python_LIBRARY_DIRS}/python310_d.lib)
+#     else()
+#         target_link_libraries(WrapperLib PRIVATE ${Python_LIBRARY_DIRS}/python310.lib)
+#     endif()
+# endif()
 
 target_link_libraries(WrapperLib PRIVATE pybind11::module Python::Module)
 
