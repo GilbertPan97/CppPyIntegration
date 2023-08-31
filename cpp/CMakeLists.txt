@@ -12,11 +12,11 @@ add_subdirectory(src)
 add_executable(py_subprocess py_subprocess.cpp)
 
 # find and link nlohmann_json package
-find_package(nlohmann_json REQUIRED HINTS ${THIRD_PARTY}/json-3.11.2/share/cmake)
+find_package(nlohmann_json QUIET)
 target_link_libraries(py_subprocess PRIVATE nlohmann_json::nlohmann_json)
 
 # find and link glog package
-find_package(glog REQUIRED HINTS ${THIRD_PARTY})
+find_package(glog QUIET)
 target_link_libraries(py_subprocess PRIVATE glog::glog)
 
 # set target property to build pyCallCppApp

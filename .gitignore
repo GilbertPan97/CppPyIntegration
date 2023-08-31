@@ -1,7 +1,15 @@
+# launch folder
 .vscode/
-
 .idea/
 
+# build output dir
 bin/
 
+# build folder
 build/
+
+# python virtual envirenment
+venv/
+
+# python extension module
+*.pyd

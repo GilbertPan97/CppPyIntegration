@@ -1,8 +1,8 @@
 # Find Python
-find_package(Python COMPONENTS Interpreter Development REQUIRED)
-# message("Python_INCLUDE_DIRS: ${Python_INCLUDE_DIRS}")
-# message("Python_LIBRARY_DIRS: ${Python_LIBRARY_DIRS}")
-# message("Python_LIBRARIES: ${Python_LIBRARIES}")
+find_package(Python3 COMPONENTS Interpreter Development REQUIRED)
+# message("Python_INCLUDE_DIRS: ${Python3_INCLUDE_DIRS}")
+# message("Python_LIBRARY_DIRS: ${Python3_LIBRARY_DIRS}")
+# message("Python_LIBRARIES: ${Python3_LIBRARIES}")
 
 # Import pybind11
 list(APPEND CMAKE_PREFIX_PATH "${CMAKE_SOURCE_DIR}/venv/Lib/site-packages/pybind11/share/cmake/pybind11")
@@ -15,20 +15,21 @@ include_directories(include)
 pybind11_add_module(WrapperLib MODULE binder.cpp wrapper_lib.cpp)
 
 # # Link Python library and pybind11 module
+# set(CMAKE_BUILD_TYPE Debug)
 # if(WIN32)
 #     # Set Python library based on project configuration
 #     if(CMAKE_BUILD_TYPE MATCHES Debug)
-#         target_link_libraries(WrapperLib PRIVATE ${Python_LIBRARY_DIRS}/python310_d.lib)
+#         target_link_libraries(WrapperLib PRIVATE ${Python3_LIBRARY_DIRS}/python37_d.lib)
 #     else()
-#         target_link_libraries(WrapperLib PRIVATE ${Python_LIBRARY_DIRS}/python310.lib)
+#         target_link_libraries(WrapperLib PRIVATE ${Python3_LIBRARY_DIRS}/python37.lib)
 #     endif()
 # endif()
 
-target_link_libraries(WrapperLib PRIVATE pybind11::module Python::Module)
+target_link_libraries(WrapperLib PRIVATE pybind11::module Python3::Module)
 
-# Get Python::Module linked libraries
-get_target_property(PYTHON_MODULE_LIBRARIES Python::Module INTERFACE_LINK_LIBRARIES)
-message("Python::Module linked libraries: ${PYTHON_MODULE_LIBRARIES}")
+# # Get Python::Module linked libraries
+# get_target_property(PYTHON_MODULE_LIBRARIES Python3::Module INTERFACE_LINK_LIBRARIES)
+# message("Python::Module linked libraries: ${PYTHON_MODULE_LIBRARIES}")
 
 set_target_properties(WrapperLib PROPERTIES
                       CXX_STANDARD 11
