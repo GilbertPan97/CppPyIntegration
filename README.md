@@ -44,16 +44,38 @@ CppPyIntegration/
 
 ```
 ## Installation and Building
+Before compiling the project, please ensure that you have a Python 3 environment installed on your computer. Additionally, it's recommended to set up a virtual environment in the project's root directory. Follow the steps below for the setup:
 
-To build and run the examples, follow these steps:
+**1. Clone project**
+Clone project and its 3rd-party
+```
+git clone --recursive https://github.com/GilbertPan97/CppPyIntegration.git
+```
 
-1. **Building C++ Code**:
-   - Navigate to the `cpp/` directory.
-   - Follow the instructions in `CMakeLists.txt` to build the C++ code.
+**2. Create and activate a virtual environment**
 
-2. **Running Examples**:
-   - Navigate to the `examples/` directory.
-   - Run the desired example script using Python or execute the compiled C++ program.
+**macOS and Linux:**
+```
+python3 -m venv venv
+source venv/bin/activate
+```
+**Windows:**
+```
+python3 -m venv venv
+venv\Scripts\activate
+```
+**3. Installing python dependencies:**
+```
+pip install -r requirements.txt
+```
+
+**4. Build project and run examples**
+
+* **Building C++ Code**:
+Navigate to the `CppPyIntegration/` directory, and follow the instructions in `CMakeLists.txt` to build the C++ code.
+
+* **Running Examples**:
+Navigate to the `examples/` directory, Run the desired example script using Python or execute the compiled C++ program.
 
 ## Usage
 
