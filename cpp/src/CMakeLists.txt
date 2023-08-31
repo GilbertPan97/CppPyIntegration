@@ -39,12 +39,14 @@ set_target_properties(WrapperLib PROPERTIES
                       CXX_EXTENSIONS OFF)
 
 # copy build python package to example directory
+if(NOT EXISTS ${CMAKE_SOURCE_DIR}/examples/utils)
+    message("Creating directory: ${CMAKE_SOURCE_DIR}/examples/utils")
+    execute_process(COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_SOURCE_DIR}/examples/utils)
+endif()
+
 add_custom_command(TARGET WrapperLib POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
         $<TARGET_FILE:WrapperLib>
         ${CMAKE_SOURCE_DIR}/examples/utils
-    # COMMAND ${CMAKE_COMMAND} -E copy_if_different
-    #     $<TARGET_FILE_DIR:WrapperLib>/WrapperLib.lib
-    #     ${CMAKE_SOURCE_DIR}/examples/utils
     COMMENT "Copying executable if different after build"
 )
