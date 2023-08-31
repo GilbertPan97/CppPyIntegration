@@ -13,3 +13,7 @@ venv/
 
 # python extension module
 *.pyd
+*.so
+
+# build libs
+*.lib

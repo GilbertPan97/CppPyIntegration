@@ -5,7 +5,9 @@ find_package(Python3 COMPONENTS Interpreter Development REQUIRED)
 # message("Python_LIBRARIES: ${Python3_LIBRARIES}")
 
 # Import pybind11
+include(FindPackageHandleStandardArgs)
 list(APPEND CMAKE_PREFIX_PATH "${CMAKE_SOURCE_DIR}/venv/Lib/site-packages/pybind11/share/cmake/pybind11")
+list(APPEND CMAKE_PREFIX_PATH "${CMAKE_SOURCE_DIR}/venv/lib/python3.9/site-packages/pybind11/share/cmake/pybind11")
 find_package(pybind11 REQUIRED)
 
 # Include header file directories
@@ -41,8 +43,8 @@ add_custom_command(TARGET WrapperLib POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
         $<TARGET_FILE:WrapperLib>
         ${CMAKE_SOURCE_DIR}/examples/utils
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        $<TARGET_FILE_DIR:WrapperLib>/WrapperLib.lib
-        ${CMAKE_SOURCE_DIR}/examples/utils
+    # COMMAND ${CMAKE_COMMAND} -E copy_if_different
+    #     $<TARGET_FILE_DIR:WrapperLib>/WrapperLib.lib
+    #     ${CMAKE_SOURCE_DIR}/examples/utils
     COMMENT "Copying executable if different after build"
 )
