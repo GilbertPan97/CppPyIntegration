@@ -14,6 +14,10 @@ include(CppPyIntegrationUtils)
 add_subdirectory(${THIRD_PARTY}/glog)
 add_subdirectory(${THIRD_PARTY}/json)
 
+if (NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE "Release")
+endif (NOT CMAKE_BUILD_TYPE)
+
 # set project output dir and postfix
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/bin)
