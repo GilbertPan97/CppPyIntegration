@@ -46,11 +46,11 @@ def rece_stderr_pipe(proc):
 
 if __name__ == "__main__":
     # Log file and exec proc saved path
-    log_file = "./logs/log.INFO"
+    log_file = "../logs/log.INFO"
     if sys.platform.startswith('win'):
-        exec_file = "./bin/Release/py_subprocess"
+        exec_file = "../bin/Release/py_subprocess"
     elif sys.platform.startswith('linux'):
-        exec_file = "./bin/py_subprocess"
+        exec_file = "../bin/py_subprocess"
 
     # Execute C++ program and redirect output to a log file
     proc = subprocess.Popen([exec_file], stdin=subprocess.PIPE, stderr=subprocess.PIPE, text=True)

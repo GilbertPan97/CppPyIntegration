@@ -1,5 +1,8 @@
 from utils import WrapperLib
 
+# Print WrapperLib content
+print(dir(WrapperLib))
+
 # Create WrapperLib objection
 cppLib = WrapperLib.PyWrapperLib()
 
